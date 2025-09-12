@@ -6,12 +6,12 @@ export const GAME_PHASES = {
 export const CHIP_DENOMINATIONS = {
   WHITE: { value: 1, color: 'white', symbol: '⚪' },
   RED: { value: 5, color: 'red', symbol: '🔴' },
-  GREEN: { value: 25, color: 'green', symbol: '🟢' },
-  BLACK: { value: 100, color: 'black', symbol: '⚫' },
-  PURPLE: { value: 500, color: 'magenta', symbol: '🟣' }
+  GREEN: { value: 10, color: 'green', symbol: '🟢' },
+  BLACK: { value: 25, color: 'black', symbol: '⚫' },
+  PURPLE: { value: 100, color: 'magenta', symbol: '🟣' }
 };
 
-export const CHIP_VALUES = [1, 5, 25, 100, 500];
+export const CHIP_VALUES = [1, 5, 10, 25, 100];
 
 export const STARTING_BANKROLL = 10000;
 
@@ -147,7 +147,7 @@ export const ODDS_MULTIPLIERS = {
 };
 
 export const MIN_BET = 1;
-export const MAX_BET = 10000;
+export const MAX_BET = 5000;
 
 export const ROLL_OUTCOMES = {
   NATURAL: 'natural',        // 7 or 11 on come out
