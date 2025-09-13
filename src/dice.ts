@@ -1,21 +1,40 @@
+/**
+ * @fileoverview Secure dice rolling system for craps simulation
+ * @author Craps Simulator Team
+ * @version 1.0.0
+ */
+
 import crypto from 'crypto';
+import type { DiceRoll, DiceStatistics, RandomnessValidation } from './types/index.js';
 import { isValidDiceRoll } from './utils/validators.js';
 import { formatDiceRoll } from './utils/helpers.js';
 
+/**
+ * Cryptographically secure dice rolling system
+ * Provides realistic dice behavior with statistical validation
+ * @class
+ */
 export class Dice {
-  constructor() {
-    this.rollHistory = [];
-    this.statistics = {
+  private rollHistory: DiceRoll[] = [];
+  private statistics = {
       totalRolls: 0,
       rollCounts: {
         2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0,
         8: 0, 9: 0, 10: 0, 11: 0, 12: 0
-      },
-      hardwayCount: { 4: 0, 6: 0, 8: 0, 10: 0 },
-      sequences: []
+      } as Record<number, number>,
+      hardwayCount: { 4: 0, 6: 0, 8: 0, 10: 0 } as Record<number, number>,
+      sequences: [] as number[]
     };
+
+  constructor() {
+    // Statistics initialized above
   }
 
+  /**
+   * Roll two six-sided dice using cryptographically secure random generation
+   * @returns {DiceRoll} Complete roll result with dice values, total, and metadata
+   * @throws {Error} If generated roll is invalid
+   */
   roll() {
     const die1 = this._generateSecureRandomInt(1, 6);
     const die2 = this._generateSecureRandomInt(1, 6);
@@ -31,7 +50,7 @@ export class Dice {
     return rollResult;
   }
 
-  _generateSecureRandomInt(min, max) {
+  private _generateSecureRandomInt(min: number, max: number): number {
     const range = max - min + 1;
     const bytesNeeded = Math.ceil(Math.log2(range) / 8);
     const maxValue = Math.pow(256, bytesNeeded);
@@ -98,6 +117,10 @@ export class Dice {
     return [...this.rollHistory];
   }
 
+  /**
+   * Get comprehensive statistics about dice rolls including frequencies and validation
+   * @returns {DiceStatistics} Complete statistical analysis of all rolls
+   */
   getStatistics() {
     return {
       ...this.statistics,
@@ -176,6 +199,11 @@ export class Dice {
     return entropy;
   }
 
+  /**
+   * Validate the randomness of dice rolls using statistical tests
+   * @param {number} [minimumRolls=100] - Minimum number of rolls required for validation
+   * @returns {RandomnessValidation} Validation results with test details and recommendations
+   */
   validateRandomness(minimumRolls = 100) {
     const stats = this.getStatistics();
     

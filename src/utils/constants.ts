@@ -1,9 +1,11 @@
+import type { ChipDenominations, BetTypes, PayoutOddsMap } from '../types/index.js';
+
 export const GAME_PHASES = {
   COME_OUT: 'come_out',
   POINT: 'point'
 };
 
-export const CHIP_DENOMINATIONS = {
+export const CHIP_DENOMINATIONS: ChipDenominations = {
   WHITE: { value: 1, color: 'white', symbol: '⚪' },
   RED: { value: 5, color: 'red', symbol: '🔴' },
   GREEN: { value: 10, color: 'green', symbol: '🟢' },
@@ -22,7 +24,7 @@ export const POINT_NUMBERS = [4, 5, 6, 8, 9, 10];
 export const FIELD_NUMBERS = [2, 3, 4, 9, 10, 11, 12];
 export const HARDWAY_NUMBERS = [4, 6, 8, 10];
 
-export const BET_TYPES = {
+export const BET_TYPES: BetTypes = {
   PASS: 'pass',
   DONT_PASS: 'dont_pass',
   PASS_ODDS: 'pass_odds',
@@ -65,7 +67,7 @@ export const BET_TYPES = {
   HOP_BET: 'hop_bet'
 };
 
-export const PAYOUT_ODDS = {
+export const PAYOUT_ODDS: PayoutOddsMap = {
   [BET_TYPES.PASS]: { win: 1, lose: 1 },
   [BET_TYPES.DONT_PASS]: { win: 1, lose: 1 },
   

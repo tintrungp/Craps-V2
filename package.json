@@ -2,18 +2,24 @@
   "name": "craps-simulator",
   "version": "1.0.0",
   "description": "A comprehensive craps simulator with CLI interface, modular architecture, and extensive betting options",
-  "main": "src/game.js",
+  "main": "dist/game.js",
   "type": "module",
   "scripts": {
-    "start": "node cli/index.js",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
-    "lint": "eslint src/ tests/ cli/",
-    "dev": "node --watch cli/index.js"
+    "start": "npm run build && node dist/cli/index.js",
+    "dev": "tsc && node --watch dist/cli/index.js",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "test": "npm run build && jest",
+    "test:watch": "tsc && jest --watch",
+    "test:coverage": "npm run build && jest --coverage",
+    "lint": "eslint src/ tests/ cli/ --ext .ts",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf dist/",
+    "docs": "typedoc",
+    "docs:serve": "typedoc && python3 -m http.server 8080 -d docs"
   },
   "bin": {
-    "craps": "./cli/index.js"
+    "craps": "./dist/cli/index.js"
   },
   "keywords": [
     "craps",
@@ -36,13 +42,24 @@
   "devDependencies": {
     "jest": "^29.7.0",
     "eslint": "^8.57.0",
-    "@types/jest": "^29.5.8"
+    "@types/jest": "^29.5.8",
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.3",
+    "ts-jest": "^29.1.1",
+    "ts-node": "^10.9.2",
+    "typedoc": "^0.25.4",
+    "@typescript-eslint/eslint-plugin": "^6.13.1",
+    "@typescript-eslint/parser": "^6.13.1"
   },
   "jest": {
+    "preset": "ts-jest",
     "testEnvironment": "node",
+    "roots": ["<rootDir>/src", "<rootDir>/tests"],
+    "testMatch": ["**/__tests__/**/*.ts", "**/?(*.)+(spec|test).ts"],
     "collectCoverageFrom": [
-      "src/**/*.js",
-      "!src/**/*.test.js"
+      "src/**/*.ts",
+      "!src/**/*.test.ts",
+      "!src/**/*.d.ts"
     ],
     "coverageThreshold": {
       "global": {
@@ -51,6 +68,9 @@
         "lines": 80,
         "statements": 80
       }
+    },
+    "moduleNameMapping": {
+      "^@/(.*)$": "<rootDir>/src/$1"
     }
   },
   "engines": {

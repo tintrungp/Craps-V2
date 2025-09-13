@@ -1,3 +1,4 @@
+import type { GameState } from '../gameState.js';
 import { 
   CHIP_VALUES, 
   MIN_BET, 
@@ -8,13 +9,13 @@ import {
 } from './constants.js';
 
 export class ValidationError extends Error {
-  constructor(message) {
+  constructor(message: string) {
     super(message);
     this.name = 'ValidationError';
   }
 }
 
-export function isValidChipAmount(amount) {
+export function isValidChipAmount(amount: number): boolean {
   return typeof amount === 'number' && 
          amount > 0 && 
          amount >= MIN_BET && 

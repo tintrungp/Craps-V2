@@ -1,3 +1,9 @@
+/**
+ * @fileoverview Game state management for craps simulation
+ * @author Craps Simulator Team
+ * @version 1.0.0
+ */
+
 import { 
   STARTING_BANKROLL, 
   GAME_PHASES, 
@@ -8,8 +14,24 @@ import {
 import { validateGameState, ValidationError } from './utils/validators.js';
 import { deepClone } from './utils/helpers.js';
 
+/**
+ * Manages the complete game state for a craps game
+ * Handles bankroll, bets, game phase, statistics, and player options
+ * @class
+ */
 export class GameState {
-  constructor(initialBankroll = STARTING_BANKROLL) {
+  public bankroll: number;
+  public phase: string;
+  public point: number | null;
+  public bets: Map<string, any>;
+  public rollHistory: any[];
+  public gameHistory: any[];
+  public statistics: any;
+  public playerOptions: any;
+  public gameStartTime: Date;
+  public currentRound: number;
+
+  constructor(initialBankroll: number = STARTING_BANKROLL) {
     this.bankroll = initialBankroll;
     this.phase = GAME_PHASES.COME_OUT;
     this.point = null;
@@ -52,6 +74,14 @@ export class GameState {
     };
   }
 
+  /**
+   * Place a bet on the craps table
+   * @param {string} betType - Type of bet from BET_TYPES constants
+   * @param {number} amount - Amount to bet in dollars
+   * @param {Object} [metadata={}] - Additional bet metadata
+   * @returns {boolean} True if bet was placed successfully
+   * @throws {ValidationError} If insufficient funds or invalid bet
+   */
   placeBet(betType, amount, metadata = {}) {
     if (this.bankroll < amount) {
       throw new ValidationError(ERROR_MESSAGES.INSUFFICIENT_BANKROLL);
@@ -155,6 +185,11 @@ export class GameState {
     return allowedTypes.includes(betType);
   }
 
+  /**
+   * Establish a point number and transition to point phase
+   * @param {number} pointNumber - Point number to establish (4,5,6,8,9,10)
+   * @throws {ValidationError} If invalid point number
+   */
   establishPoint(pointNumber) {
     if (!POINT_NUMBERS.includes(pointNumber)) {
       throw new ValidationError(`Invalid point number: ${pointNumber}`);
@@ -367,6 +402,10 @@ export class GameState {
     return removableBets;
   }
 
+  /**
+   * Get comprehensive game statistics
+   * @returns {GameStatistics} Complete statistics including win rates, ROI, and performance metrics
+   */
   getStatistics() {
     const duration = this.getGameDuration();
     this.statistics.timePlayed = duration;

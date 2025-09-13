@@ -1,0 +1,29 @@
+{
+  "source": {
+    "include": [
+      "./src/",
+      "./cli/",
+      "./README.md"
+    ],
+    "includePattern": "\\.(js|md)$",
+    "excludePattern": "\\.test\\.js$"
+  },
+  "opts": {
+    "destination": "./docs/",
+    "recurse": true,
+    "readme": "./README.md"
+  },
+  "plugins": [
+    "plugins/markdown"
+  ],
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false,
+    "useLongnameInNav": false,
+    "showInheritedInNav": true
+  },
+  "metadata": {
+    "title": "Craps Simulator API Documentation",
+    "version": "1.0.0"
+  }
+}
