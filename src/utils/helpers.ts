@@ -278,7 +278,7 @@ export function throttle(func, limit) {
   let inThrottle;
   return function executedFunction(...args) {
     if (!inThrottle) {
-      func.apply(this, args);
+      func.apply(null, args);
       inThrottle = true;
       setTimeout(() => inThrottle = false, limit);
     }

@@ -5,8 +5,8 @@
   "main": "dist/game.js",
   "type": "module",
   "scripts": {
-    "start": "npm run build && node dist/cli/index.js",
-    "dev": "tsc && node --watch dist/cli/index.js",
+    "start": "npm run build && node cli/index.js",
+    "dev": "npm run build && node --watch cli/index.js",
     "build": "tsc",
     "build:watch": "tsc --watch",
     "test": "npm run build && jest",
@@ -19,7 +19,7 @@
     "docs:serve": "typedoc && python3 -m http.server 8080 -d docs"
   },
   "bin": {
-    "craps": "./dist/cli/index.js"
+    "craps": "./cli/index.js"
   },
   "keywords": [
     "craps",

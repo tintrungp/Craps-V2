@@ -44,7 +44,7 @@ export class Dice {
       throw new Error('Generated invalid dice roll');
     }
     
-    const rollResult = this._createRollResult(dice);
+    const rollResult = this._createRollResult(dice as [number, number]);
     this._recordRoll(rollResult);
     
     return rollResult;
@@ -65,7 +65,7 @@ export class Dice {
     return min + (randomValue % range);
   }
 
-  _createRollResult(dice) {
+  _createRollResult(dice: [number, number]): DiceRoll {
     const [die1, die2] = dice;
     const total = die1 + die2;
     const isHard = die1 === die2;
@@ -236,8 +236,8 @@ export class Dice {
     const { totalRolls } = this.statistics;
     
     for (const [total, freq] of Object.entries(frequencies)) {
-      const observed = freq.count;
-      const expected = freq.expected * totalRolls;
+      const observed = (freq as any).count;
+      const expected = (freq as any).expected * totalRolls;
       
       if (expected > 0) {
         chiSquare += Math.pow(observed - expected, 2) / expected;
